@@ -24,21 +24,23 @@ def cook_book():
 
 def get_shop_list_by_dishes(dishes, person_count):
     cook_dic = cook_book()
-    shop_list_by_dishes = {}
+    shop_dic_by_dishes = {}
     for dish in dishes:
         if dish in cook_dic.keys():
-            for a in cook_dic.get(dish):
-                if a.get('ingredient_name') not in shop_list_by_dishes:
-                    shop_list_by_dishes.setdefault(a.get('ingredient_name'), {'quantity': a.get('quantity') * int(person_count), 'measure': a.get('measure')})
+            for b in cook_dic[dish]:
+                if b.get('ingredient_name') not in shop_dic_by_dishes:
+                    shop_dic_by_dishes.setdefault(b.get('ingredient_name'),
+                                                 {'quantity': int(b.get('quantity') * int(person_count)),
+                                                  'measure': b.get('measure')})
                 else:
-                    shop_list_by_dishes[dish['ingredient_name']]['quantity'] += dish['quantity'] * person_count
+                    shop_dic_by_dishes[b['ingredient_name']]['quantity'] += b['quantity'] * int(person_count)
         else:
-            print('такого блюда нет')
-    return shop_list_by_dishes
+            print('Одно или несколько блюд отсутсвует в списке')
+    return shop_dic_by_dishes
 
 
 
-print(get_shop_list_by_dishes(['Запеченный картофель', 'Омлет'], 2))
+print(get_shop_list_by_dishes(['Омлет', 'Фахитос'], 2))
 
 
 
